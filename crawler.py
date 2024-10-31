@@ -12,7 +12,7 @@ class Crawler:
         self.crawler = GoogleImageCrawler(
             feeder_threads=1,
             parser_threads=2,
-            downloader_threads=2,
+            downloader_threads=4,
             storage={'root_dir': directory}
         )
 
@@ -20,12 +20,12 @@ class Crawler:
         self.crawler.crawl(keyword=self.keyword, max_num=self.limit)
 
     def create_annotation(self, directory: str) -> str:
-        with open('annotation.cvs', mode='w', newline='', encoding='utf-8') as file:
+        with open('annotation.cvs', mode='w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerows(["absolute path", "relative path"])
+            writer.writerow(['absolute path', ' relative path'])
             pics = os.listdir(directory)
             for i in pics:
                 d = os.path.abspath(os.path.join(self.directory, i))
                 f = os.path.relpath(os.path.join(self.directory, i), start=".")
-                writer.writerows([d, f])
+                writer.writerow([d, f])
             return file.name
