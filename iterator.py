@@ -11,7 +11,7 @@ class Iterator:
     def __next__(self) -> str:
         line = self.file.readline().strip()
         if line:
-            part = line.split(', ')
-            return part[1]
+            part = line.split(',')
+            return part[0]
         else:
             raise StopIteration

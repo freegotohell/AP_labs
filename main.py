@@ -19,7 +19,10 @@ def main() -> None:
         class_obj = crawler.Crawler(keyword, directory, 100)
         class_obj.download()
         annotation = class_obj.create_annotation(directory)
-        iterator.Iterator(annotation)
+        iterator_obj = iterator.Iterator(annotation)
+        for img in iterator_obj:
+            print(img)
+
     except Exception as e:
         print(f"An error occurred while accessing the directory: {e} ")
 
