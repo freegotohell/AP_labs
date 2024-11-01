@@ -16,9 +16,9 @@ def parse() -> tuple[str, str, str]:
 def main() -> None:
     keyword, directory, annotation = parse()
     try:
-        crawler.Crawler(keyword, directory, 100)
-        crawler.Crawler.download(crawler.Crawler(keyword, directory, 100))
-        annotation = crawler.Crawler.create_annotation(crawler.Crawler(keyword, directory, 100), directory)
+        class_obj = crawler.Crawler(keyword, directory, 100)
+        class_obj.download()
+        annotation = class_obj.create_annotation(directory)
         iterator.Iterator(annotation)
     except Exception as e:
         print(f"An error occurred while accessing the directory: {e} ")
