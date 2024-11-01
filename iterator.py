@@ -5,10 +5,10 @@ class Iterator:
         self.file = open(annotation, 'r', encoding='utf-8')
         next(self.file)
 
-    def __iter__(self):
+    def __iter__(self) -> 'Iterator':
         return self
 
-    def __next__(self):
+    def __next__(self) -> str:
         line = self.file.readline().strip()
         if line:
             part = line.split(', ')
