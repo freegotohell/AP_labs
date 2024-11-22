@@ -1,10 +1,13 @@
 import argparse
 
-from image import *
-from histogram import draw_histogram
+from image import process_image
 
 
 def parse() -> tuple[str, str]:
+    """
+    Parse arguments from terminal
+    :return:Tuple of parsed arguments
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("original_path", type=str, help="path to original image")
     parser.add_argument("inverted_path", type=str, help="path to save inverted image")
@@ -16,18 +19,7 @@ def main() -> None:
     original_path, inverted_path = parse()
 
     try:
-        img = read_image(original_path)
-
-        width, height = get_image_dimensions(img)
-        print(f"Image size: {width}x{height}")
-
-        draw_histogram(img)
-
-        inverted_img = invert_image(img)
-        display_images(img, inverted_img)
-
-        save_image(inverted_img)
-
+        process_image(original_path, inverted_path)
     except Exception as e:
         print(e)
 
