@@ -1,25 +1,24 @@
 import cv2
-import numpy as np
 import matplotlib.pyplot as plt
+from histogram import draw_histogram
 
 
-def read_image(image_name: str) -> np.ndarray:
-    img = cv2.imread(image_name, -1)
-
+def process_image(original_path: str, inverted_path: str) -> None:
+    """
+    reads an image, displays it and its inversion, and saves the inversion
+    :param original_path: from terminal
+    :param inverted_path: from cmd
+    :return:
+    """
+    img = cv2.imread(original_path, -1)
+    draw_histogram(img)
     if img is None:
-        raise FileNotFoundError(f"could not read image from '{image_name}'")
-    return img
+        raise FileNotFoundError(f"Could not read image from '{original_path}'")
 
+    height, width = img.shape[:2]
+    print(f"Image size: {width}x{height}")
+    inverted_img = cv2.bitwise_not(img)
 
-def get_image_dimensions(img: np.ndarray) -> tuple[int, int]:
-    return img.shape[:2]
-
-
-def invert_image(img: np.ndarray) -> np.ndarray:
-    return cv2.bitwise_not(img)
-
-
-def display_images(img: np.ndarray, inverted_img: np.ndarray) -> None:
     plt.figure(figsize=(10, 5))
 
     plt.subplot(1, 2, 1)
@@ -32,11 +31,8 @@ def display_images(img: np.ndarray, inverted_img: np.ndarray) -> None:
     plt.imshow(cv2.cvtColor(inverted_img, cv2.COLOR_BGR2RGB))
     plt.axis('off')
 
-    plt.suptitle("maaagic")
+    plt.suptitle("magic")
     plt.show()
 
-
-def save_image(save_path: str, img: np.ndarray) -> None:
-    if not cv2.imwrite(save_path+".jpg", img):
-        raise OSError(f"could not save image to '{save_path}")
-        
+    if not cv2.imwrite(inverted_path + ".jpg", inverted_img):
+        raise OSError(f"Could not save image to '{inverted_path}.jpg'")
