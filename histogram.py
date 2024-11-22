@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt
 
 
 def draw_histogram(img: np.ndarray) -> None:
+    """
+    counts and draws histogram
+    :param img: image from pc, converted to array
+    :return:
+    """
     plt.figure(figsize=(10, 5))
     colors = ('blue', 'green', 'red')
 
