@@ -36,6 +36,7 @@ def display_images(img: np.ndarray, inverted_img: np.ndarray) -> None:
     plt.show()
 
 
-def save_image(img: np.ndarray) -> None:
-    if not cv2.imwrite("2.jpg", img):
-        raise OSError(f"could not save image '{img}")
+def save_image(save_path: str, img: np.ndarray) -> None:
+    if not cv2.imwrite(save_path+".jpg", img):
+        raise OSError(f"could not save image to '{save_path}")
+        
