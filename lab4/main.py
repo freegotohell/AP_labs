@@ -25,8 +25,8 @@ def main():
         compute_statistic(data_frame)
         new_data_frame = filter_width_height(data_frame, max_width, max_height)
         print("\n\nfiltered DataFrame:\n", new_data_frame)
-        add_area_and_sort(data_frame)  # updates existing data_frame
-        print("\n\nDataFrame sorted by area:\n", data_frame)
+        new_new_data_frame = add_area_and_sort(data_frame)
+        print("\n\nDataFrame sorted by area:\n", new_new_data_frame)
         create_histogram(data_frame)
     except FileNotFoundError:
         print(f"no csv file at {csv_path}")
