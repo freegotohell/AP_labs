@@ -86,7 +86,7 @@ def create_histogram(df: pd.DataFrame) -> None:
     """
     if not df.empty:
         plt.figure(figsize=(10, 6))
-        df['area'].hist()
+        df['area'].hist(bins=len(df))
         plt.title('histogram by area')
         plt.xlabel('area')
         plt.ylabel('number of images')
