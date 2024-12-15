@@ -6,6 +6,10 @@ from iterator import Iterator
 
 class Window(QMainWindow):
     def __init__(self):
+        """
+        creates a window for displaying images, with a button for switching between images and a button for selecting an
+        annotation
+        """
         super().__init__()
 
         self.iterator = None
@@ -35,6 +39,9 @@ class Window(QMainWindow):
         self.layout.addWidget(self.next)
 
     def select_annotation_file(self):
+        """
+        opens a file selection dialog box and processes the user's selection
+        """
         file_path, _ = QFileDialog.getOpenFileName(self, "choose annotation", "", "CSV Files (*.csv)")
         if file_path:
             self.iterator = Iterator(file_path)
@@ -48,6 +55,9 @@ class Window(QMainWindow):
                 self.annotation.setEnabled(False)
 
     def show_image(self) -> None:
+        """
+        shows the current image
+        """
         image_path = self.image_paths[self.index]
         pixmap = QPixmap(image_path)
         if pixmap.isNull():
@@ -57,6 +67,9 @@ class Window(QMainWindow):
                                                Qt.SmoothTransformation))
 
     def show_next_image(self) -> None:
+        """
+        if it does not go beyond image_paths it increases the index value by 1 and calls the function again
+        """
         self.show_image()
         self.index += 1
         if self.index == len(self.image_paths) - 1:
