@@ -13,8 +13,6 @@ class Window(QMainWindow):
         super().__init__()
 
         self.iterator = None
-        self.image_paths = []
-        self.index = 0
 
         self.setWindowTitle("sssnakes")
         self.setGeometry(100, 100, 1200, 800)
@@ -45,33 +43,31 @@ class Window(QMainWindow):
         file_path, _ = QFileDialog.getOpenFileName(self, "choose annotation", "", "CSV Files (*.csv)")
         if file_path:
             self.iterator = Iterator(file_path)
-            self.image_paths = list(self.iterator)
-            if not self.image_paths:
-                self.image.setText("annotation is empty")
-            else:
-                self.index = 0
+            try:
+                next(self.iterator)
                 self.show_image()
                 self.next.setEnabled(True)
                 self.annotation.setEnabled(False)
+            except StopIteration:
+                self.image.setText("annotation is empty")
 
     def show_image(self) -> None:
         """
         shows the current image
         """
-        image_path = self.image_paths[self.index]
-        pixmap = QPixmap(image_path)
-        if pixmap.isNull():
-            self.image.setText(f"cant load: {image_path}")
-        else:
-            self.image.setPixmap(pixmap.scaled(self.image.size(), Qt.KeepAspectRatio,
-                                               Qt.SmoothTransformation))
+        try:
+            image_path = next(self.iterator)
+            pixmap = QPixmap(image_path)
+            if pixmap.isNull():
+                self.image.setText(f"cant load: {image_path}")
+            else:
+                self.image.setPixmap(pixmap.scaled(self.image.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        except StopIteration:
+            self.next.setEnabled(False)
+            self.image.setText("the end")
 
     def show_next_image(self) -> None:
         """
         if it does not go beyond image_paths it increases the index value by 1 and calls the function again
         """
         self.show_image()
-        self.index += 1
-        if self.index == len(self.image_paths) - 1:
-            self.next.setEnabled(False)
-            self.image.setText("the end")
